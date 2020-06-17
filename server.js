@@ -12,12 +12,14 @@ app.use(express.urlencoded({extended: true}))
 //return notes from db
 app.get('/api/notes', function(req, res){
     console.log(JSON.parse(fs.readFileSync('./db/db.json')))
-    return JSON.parse(fs.readFileSync('./db/db.json'))
+    res.send(JSON.parse(fs.readFileSync('./db/db.json')))
 })
 
 //save notes
 app.post('/api/notes', function(req, res){
-    let note = req.note
+    console.log(req)
+    let note = req.data.body
+    console.log(note)
     let db = JSON.parse(fs.readFileSync('./db/db.json'))
     db.push(note)
     fs.writeFileSync('db/db.json', JSON.stringify(db))
