@@ -2,6 +2,7 @@ const express = require('express')
 const fs = require('fs')
 const app = express()
 const PORT = process.env.PORT || 8080
+const path = require("path");
 
 app.use(express.static('public'))
 
@@ -26,7 +27,7 @@ app.post('/api/notes', function(req, res){
     let noteList = JSON.parse(fs.readFileSync('./db/db.json'))
     noteList.push(note)
     noteList.forEach((item, index, arr)=>{
-        arr[index] = {...item, id:index+1}
+        arr[index] = {...item, id:index}
     })
     // console.log(`[post] ${JSON.stringify(noteList)}`)
     fs.writeFileSync('db/db.json', JSON.stringify(noteList))
@@ -39,7 +40,7 @@ app.delete('/api/notes/:id', function(req, res){
     const noteList = JSON.parse(fs.readFileSync('./db/db.json'))
     noteList.splice(id,1)
     noteList.forEach((item, index, arr)=>{
-        arr[index] = {...item, id:index+1}
+        arr[index] = {...item, id:index}
     })
     // console.log(`[delete] ${JSON.stringify(noteList)}`)
     fs.writeFileSync('db/db.json', JSON.stringify(noteList))
