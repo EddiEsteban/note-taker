@@ -33,6 +33,9 @@ app.delete('/api/notes/:id', function(req, res){
     const id = req.params.id
     const noteList = JSON.parse(fs.readFileSync('./db/db.json'))
     noteList.splice(id,1)
+    noteList.forEach((item, index, arr)=>{
+        arr[index] = {...item, id:index}
+    })
     fs.writeFileSync('db/db.json', JSON.stringify(noteList))
     res.send(noteList)
 })

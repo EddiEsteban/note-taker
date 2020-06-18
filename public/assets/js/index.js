@@ -60,6 +60,7 @@ const handleNoteSave = function () {
     getAndRenderNotes();
     renderActiveNote();
   });
+  document.querySelector(".note-title").focus();
 };
 
 // Delete the clicked note
