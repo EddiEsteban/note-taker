@@ -84,12 +84,14 @@ const handleNoteDelete = function (event) {
 const handleNoteView = function () {
   activeNote = $(this).data();
   renderActiveNote();
+  console.log('handle existing note')
 };
 
 // Sets the activeNote to and empty object and allows the user to enter a new note
 const handleNewNoteView = function () {
   activeNote = {};
   renderActiveNote();
+  console.log('handle new note')
 };
 
 // If a note's title or text are empty, hide the save button
