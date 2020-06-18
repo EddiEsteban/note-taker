@@ -2,7 +2,7 @@ const express = require('express')
 const fs = require('fs')
 const app = express()
 const PORT = process.env.PORT || 8080
-const path = require("path");
+// const path = require("path");
 
 app.use(express.static('public'))
 
@@ -10,9 +10,9 @@ app.use(express.json())
 app.use(express.urlencoded({extended: true}))
 
 
-app.get("/", function(req, res) {
-    res.json(path.join(__dirname, "public/index.html"));
-  });
+// app.get("/", function(req, res) {
+//     res.json(path.join(__dirname, "public/index.html"));
+//   });
 
 //return notes from db
 app.get('/api/notes', function(req, res){
@@ -31,7 +31,7 @@ app.post('/api/notes', function(req, res){
     })
     // console.log(`[post] ${JSON.stringify(noteList)}`)
     fs.writeFileSync('db/db.json', JSON.stringify(noteList))
-    res.send(noteList)
+    res.send()
 })
 
 //delete note of specific id
