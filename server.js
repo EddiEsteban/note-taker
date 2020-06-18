@@ -12,22 +12,29 @@ app.use(express.urlencoded({extended: true}))
 //return notes from db
 app.get('/api/notes', function(req, res){
     const noteList = JSON.parse(fs.readFileSync('./db/db.json'))
-    console.log(noteList)
+    // console.log(noteList)
     res.send(noteList)
 })
 
 //save notes
 app.post('/api/notes', function(req, res){
     let note = req.body
-    let db = JSON.parse(fs.readFileSync('./db/db.json'))
-    db.push(note)
-    fs.writeFileSync('db/db.json', JSON.stringify(db))
-    res.send(db)
+    let noteList = JSON.parse(fs.readFileSync('./db/db.json'))
+    noteList.push(note)
+    noteList.forEach((item, index, arr)=>{
+        arr[index] = {...item, id:index}
+    })
+    fs.writeFileSync('db/db.json', JSON.stringify(noteList))
+    res.send(noteList)
 })
 
 //delete note of specific id
 app.delete('/api/notes/:id', function(req, res){
-    return fs.readFileSync('db/db.json')
+    const id = req.params.id
+    const noteList = JSON.parse(fs.readFileSync('./db/db.json'))
+    noteList.splice(id,1)
+    fs.writeFileSync('db/db.json', JSON.stringify(noteList))
+    res.send(noteList)
 })
 
 // listen for client requests
